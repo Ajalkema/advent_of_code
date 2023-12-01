@@ -36,10 +36,10 @@ class Day1 {
 
     private fun calculateFirstNum(line: String): String {
         val (indexSpelledFirst: Int?, firstNumSpelled: String?) = line.findAnyOf(spelledDigits) ?: (null to null)
-        val (indexNumsFirst: Int?, firstNums: String?) = line.findAnyOf(digits) ?: (null to null)
+        val (indexNumsFirst: Int?, firstNum: String?) = line.findAnyOf(digits) ?: (null to null)
         return indexSpelledFirst?.let {
-            if (indexNumsFirst != null && indexNumsFirst < indexSpelledFirst) firstNums!! else firstNumSpelled!!.convertToDigitString()
-        } ?: firstNums!!
+            if (indexNumsFirst != null && indexNumsFirst < indexSpelledFirst) firstNum!! else firstNumSpelled!!.convertToDigitString()
+        } ?: firstNum!!
     }
 
     private fun calculateLastNum(line: String): String {

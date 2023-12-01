@@ -5,26 +5,11 @@ class Day01 {
     private val data = readInput("Data-1A")
 
     fun calculatePart1(): Number {
-        var sum = 0
-        data.forEach { line ->
-            val firstNum = line.findAnyOf(digits)?.second
-            val lastNum = line.findLastAnyOf(digits)?.second
-            val number = firstNum + lastNum
-            sum += number.toInt()
-        }
-        return sum
+        return data.sumOf { "${it.findAnyOf(digits)?.second}${it.findLastAnyOf(digits)?.second}".toInt() }
     }
 
     fun calculatePart2(): Number {
-        var sum = 0
-        data.forEach { line ->
-            val firstNum = calculateFirstNum(line)
-            val lastNum = calculateLastNum(line)
-
-            val combinedNum = firstNum + lastNum
-            sum += combinedNum.toInt()
-        }
-        return sum
+        return data.sumOf { "${calculateFirstNum(it)}${calculateLastNum(it)}".toInt() }
     }
 
     private fun calculateFirstNum(line: String): String {

@@ -1,15 +1,8 @@
-import java.io.File
-import java.nio.charset.Charset
-
-class Day1 {
+class Day01 {
 
     private val digits = (0..9).map { it.toString() }
     private val spelledDigits = listOf("one", "two", "three" , "four", "five", "six", "seven", "eight", "nine")
-    private val data = parse()
-
-    private fun parse(): List<String> {
-        return File("src/main/resources/Data-1A.txt").readLines(Charset.defaultCharset())
-    }
+    private val data = readInput("Data-1A")
 
     fun calculatePart1(): Number {
         var sum = 0

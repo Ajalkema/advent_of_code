@@ -1,5 +1,9 @@
 fun main() {
-    val day1 = Day1()
-    println(day1.calculatePart1())
-    println(day1.calculatePart2())
+    val day01 = Day01()
+    day01.calculatePart1().println()
+    day01.calculatePart2().println()
+
+    val day01Alt = Day01_alt()
+    day01Alt.part01(readInput("Data-1A")).println()
+    day01Alt.part02(readInput("Data-1A")).println()
 }

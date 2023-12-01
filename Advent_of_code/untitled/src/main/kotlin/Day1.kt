@@ -28,7 +28,7 @@ class Day1 {
             val firstNum = calculateFirstNum(line)
             val lastNum = calculateLastNum(line)
 
-            val combinedNum = firstNum.toString() + lastNum.toString()
+            val combinedNum = firstNum + lastNum
             sum += combinedNum.toInt()
         }
         return sum

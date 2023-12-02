@@ -4,7 +4,7 @@ class Day02 {
 
     fun part1(input: List<String>): Int {
         val splittedLine = input.map { it.split(" ").map { it.replace(Regex("[:;,]"), "") } }
-        return splittedLine.filter { gamePossible(it) }.sumOf { it[1].toInt() }
+        return splittedLine.filter { isGamePossible(it) }.sumOf { it[1].toInt() }
     }
 
     fun part2(input: List<String>): Int {
@@ -12,7 +12,7 @@ class Day02 {
         return splittedLine.sumOf { minimumCubesSquared(it) }
     }
 
-    private fun gamePossible(line: List<String>): Boolean {
+    private fun isGamePossible(line: List<String>): Boolean {
         line.drop(2).forEachIndexed { index, s ->
             if ( s.toIntOrNull() != null && s.toInt() > colors[line[index + 3]]!!) return false
         }

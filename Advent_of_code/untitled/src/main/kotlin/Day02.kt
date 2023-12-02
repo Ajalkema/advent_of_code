@@ -1,14 +1,13 @@
-class Day02 {
+class Day02(input: List<String>) {
 
     private val colors = mapOf("red" to 12, "green" to 13, "blue" to 14)
+    private val splittedLine = input.map { it.split(" ").map { it.replace(Regex("[:;,]"), "") } }
 
-    fun part1(input: List<String>): Int {
-        val splittedLine = input.map { it.split(" ").map { it.replace(Regex("[:;,]"), "") } }
+    fun part1(): Int {
         return splittedLine.filter { isGamePossible(it) }.sumOf { it[1].toInt() }
     }
 
-    fun part2(input: List<String>): Int {
-        val splittedLine = input.map { it.split(" ").map { it.replace(Regex("[:;,]"), "") } }
+    fun part2(): Int {
         return splittedLine.sumOf { minimumCubesSquared(it) }
     }
 

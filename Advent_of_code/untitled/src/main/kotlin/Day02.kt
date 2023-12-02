@@ -14,7 +14,7 @@ class Day02 {
 
     private fun gamePossible(line: List<String>): Boolean {
         line.drop(2).forEachIndexed { index, s ->
-            if ( s.toIntOrNull() != null && s.toInt() > colors.get(line[index + 3])!!) return false
+            if ( s.toIntOrNull() != null && s.toInt() > colors[line[index + 3]]!!) return false
         }
         return true
     }

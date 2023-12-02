@@ -12,19 +12,14 @@ class Day02(input: List<String>) {
     }
 
     private fun isGamePossible(line: List<String>): Boolean {
-        line.drop(2).forEachIndexed { index, s ->
-            if ( s.toIntOrNull() != null && s.toInt() > colors[line[index + 3]]!!) return false
-        }
+        line.drop(2).forEachIndexed { index, s -> if ( s.toIntOrNull() != null && s.toInt() > colors[line[index + 3]]!!) return false }
         return true
     }
 
     private fun minimumCubesSquared(line: List<String>): Int {
         val minimumCubesMap = mutableMapOf("red" to 0, "green" to 0, "blue" to 0)
-        colors.keys.forEach { color ->
-            line.forEachIndexed { i, s ->
-                if (s.toIntOrNull() != null && line[i + 1] == color && minimumCubesMap[color]!! < s.toInt()) minimumCubesMap[color] = s.toInt()
-            }
-        }
+        colors.keys.forEach { color -> line.forEachIndexed { i, s -> if (s.toIntOrNull() != null && line[i + 1] == color && minimumCubesMap[color]!! < s.toInt())
+                minimumCubesMap[color] = s.toInt() } }
         return minimumCubesMap.values.reduce(Int::times)
     }
 }

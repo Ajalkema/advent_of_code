@@ -1,5 +1,5 @@
 fun main() {
-    val day02 = Day02(readInput("Data_2"))
-    day02.part1().println()
-    day02.part2().println()
+    val day03 = Day03(readInput("Test_data_3"))
+//    val day03 = Day03(readInput("Data_3"))
+    day03.part1().println()
 }

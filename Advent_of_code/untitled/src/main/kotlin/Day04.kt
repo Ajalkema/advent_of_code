@@ -18,9 +18,9 @@ class Day04(input: List<String>) {
         val winningsMap = List(winningNumbers.size) { index -> index to Counter(count = 1) }
         winningNumbers.forEachIndexed { index, line ->
             val numberOfWinningNums = line.count { num -> ourNumbers[index].contains(num) }
-            repeat(winningsMap[index].second.count) {
-                repeat(numberOfWinningNums) {
-                    if ((index + it + 1) <= winningsMap.size - 1) (winningsMap[index + it + 1].second.count++)
+            repeat(numberOfWinningNums) {
+                if ((index + it + 1) <= winningsMap.size - 1) {
+                    winningsMap[index + it + 1].second.count += winningsMap[index].second.count
                 }
             }
         }

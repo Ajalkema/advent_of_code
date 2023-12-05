@@ -4,18 +4,12 @@ class Day05(val input: List<String>) {
 
     fun part1(): Long {
         mapIndices.forEachIndexed { i, mapIndex ->
-            val rangesMap = mutableMapOf<Long, Long>()
-            if ((i+1) < mapIndices.size) {
-                (mapIndex + 1..<mapIndices[i + 1]).forEach { rangeIndex ->
-                    if (input[rangeIndex] == "") return@forEach
-                    val ranges = mapRangeLineToRangeMap(input[rangeIndex])
-                    ranges.getSourceRange().forEach {
-                        rangesMap[it] = convert(it, ranges.getSourceRange(), ranges.getDestinationRange())
-                    }
-                }
-                seeds.forEachIndexed { index, seed ->
-                    if (rangesMap.getOrDefault(seed, null) != null) {
-                        seeds[index] = rangesMap[seed]!!
+            seeds.forEachIndexed { index, seed ->
+                val endOfConversionData = if (i + 1 < mapIndices.size) mapIndices[i+1] else input.size-1
+                val conversionData = input.subList(mapIndex+1, endOfConversionData).map { it.split(" ").mapNotNull { it.toLongOrNull() } }
+                conversionData.forEach { line ->
+                    if (line.isNotEmpty() && seed >= line[1] && seed <= line[1] + line[2]) {
+                        seeds[index] = convert(seed, line[1], line[0])
                     }
                 }
             }
@@ -23,18 +17,7 @@ class Day05(val input: List<String>) {
         return seeds.min()
     }
 
-    private fun convert(number: Long, source: LongRange, destination: LongRange): Long {
-        return number - source.first + destination.first
+    private fun convert(number: Long, sourceStart: Long, destinationStart: Long): Long {
+        return number - sourceStart + destinationStart
     }
-
-    private fun mapRangeLineToRangeMap(line: String): Ranges {
-        val range = line.split(" ").mapNotNull { it.toLongOrNull() }
-        return Ranges(range[0], range[1], range[2])
-    }
-}
-
-
-class Ranges(val destinationStart: Long, val sourceStart: Long, val length: Long) {
-    fun getDestinationRange() = destinationStart..destinationStart+length
-    fun getSourceRange() = sourceStart..sourceStart+length
 }

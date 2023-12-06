@@ -1,4 +1,4 @@
 fun main() {
-    val day05 = Day05(readInput("Data_5"))
-    day05.part1().println()
+    val day06 = Day06(readInput("Data_6"))
+    day06.part1().println()
 }

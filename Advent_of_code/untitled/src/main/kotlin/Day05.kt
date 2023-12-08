@@ -23,26 +23,28 @@ class Day05(val input: List<String>) {
         val seedRangeStarts = seedRow.filterIndexed { index, _ -> index % 2 == 0 }
         val seedRangeLengths = seedRow.filterIndexed { index, _ -> index % 2 != 0 }
 
-        val results = MutableList(seedRangeStarts.size) { 0L }
+        var result = seedRangeStarts[0]
         seedRangeStarts.forEachIndexed { index, seedRangeStart ->
-            val intermediateResult = MutableList(seedRangeLengths[index].toInt()) { 0L }
-            intermediateResult.forEachIndexed { ii, _ ->
-                intermediateResult[ii] = seedRangeStart.plus(ii)
-                mapIndices.forEachIndexed lol@{ mapIndexIndex, mapIndexNumber ->
-                    val endOfConversionData = if (mapIndexIndex + 1 < mapIndices.size) mapIndices[mapIndexIndex + 1] else input.size - 1
-                    val conversionData = input.subList(mapIndexNumber + 1, endOfConversionData)
-                        .map { it.split(" ").mapNotNull { num -> num.toLongOrNull() } }
-                    conversionData.forEach { line ->
-                        if (line.isNotEmpty() && intermediateResult[ii] >= line[1] && intermediateResult[ii] < line[1] + line[2]) {
-                            intermediateResult[ii] = convert(intermediateResult[ii], line[1], line[0])
-                            return@lol
+            var seed = seedRangeStart
+            while (seed < seedRangeStart + seedRangeLengths[index]) {
+                    var intermediateResult = seed
+                    mapIndices.forEachIndexed lmfao@{ mapIndexIndex, mapIndexNumber ->
+                        val endOfConversionData =
+                            if (mapIndexIndex + 1 < mapIndices.size) mapIndices[mapIndexIndex + 1] else input.size - 1
+                        val conversionData = input.subList(mapIndexNumber + 1, endOfConversionData)
+                        conversionData.forEach { line ->
+                            val splittedLine = line.split(" ").mapNotNull { num -> num.toLongOrNull() }
+                            if (line.isNotEmpty() && intermediateResult >= splittedLine[1] && intermediateResult < splittedLine[1] + splittedLine[2]) {
+                                intermediateResult = convert(intermediateResult, splittedLine[1], splittedLine[0])
+                                return@lmfao
+                            }
                         }
                     }
-                }
+                if (intermediateResult < result) result = intermediateResult
+                seed++
             }
-            results[index] = intermediateResult.min().toLong()
         }
-        return results.min()
+        return result
     }
 
     private fun convert(number: Long, sourceStart: Long, destinationStart: Long): Long {

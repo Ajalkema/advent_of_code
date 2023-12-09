@@ -23,9 +23,9 @@ class Day08(input: List<String>) {
     }
 
     fun part2(): BigInteger {
-        val currentLocations = directionsMap.keys.filter { it.endsWith("A") }.toMutableList()
-        val lol = currentLocations.map { location -> stepsToFirstViableNode(location) }
-        return findLCMOfListOfNumbers(lol)
+        val currentLocations = directionsMap.keys.filter { it.endsWith("A") }
+        val stepsToFirstViableNodes = currentLocations.map { location -> stepsToFirstViableNode(location) }
+        return findLCMOfListOfNumbers(stepsToFirstViableNodes)
     }
 
     private fun stepsToFirstViableNode(start: String): BigInteger {

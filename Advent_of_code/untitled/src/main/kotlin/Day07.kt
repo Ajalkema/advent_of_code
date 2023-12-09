@@ -1,7 +1,17 @@
+import kotlin.math.min
+
 class Day07(private val input: List<String>) {
 
     fun part1(): Int {
-        val handsWithBids = input.map { HandWithBid(Hand(it.split(" ").first()), it.split(" ").last().toInt()) }.sortedBy { it.hand }
+        return getAnswer(false)
+    }
+
+    fun part2(): Int {
+        return getAnswer(true)
+    }
+
+    private fun getAnswer(hasJokers: Boolean): Int {
+        val handsWithBids = input.map { HandWithBid(Hand(it.split(" ").first(), hehe = hasJokers), it.split(" ").last().toInt()) }.sortedBy { it.hand }
         val scored = handsWithBids.mapIndexed { index, handWithBid ->  handWithBid.bid.times(index + 1) }
         return scored.sum()
     }
@@ -10,7 +20,7 @@ class Day07(private val input: List<String>) {
 
 data class HandWithBid(val hand: Hand, val bid: Int)
 
-data class Hand(val cards: String): Comparable<Hand> {
+data class Hand(val cards: String, val hehe: Boolean): Comparable<Hand> {
 
     private val charMap: Map<Char, Int>
 
@@ -45,22 +55,37 @@ data class Hand(val cards: String): Comparable<Hand> {
         throw Exception("equal cards?")
     }
 
-
     private fun getHandValue() = when {
-        this.isFiveOfAKind() -> 6
-        this.isFourOfAKind() -> 5
-        this.isFullHouse() -> 4
-        this.isThreeOfAKind() -> 3
-        this.isTwoPair() -> 2
-        this.isTwoOfAKind() -> 1
-        else -> 0
+        isFiveOfAKind() -> 6
+        isFourOfAKind() -> if (!hehe) 5 else if (charMap.getOrDefault('J', null) == 4) 6 else 5 + (charMap.getOrDefault('J', null) ?: 0)
+
+        isFullHouse() -> if (!hehe) 4 else {
+            if (charMap.getOrDefault('J', null) in listOf(2, 3)) 6 else 4
+        }
+
+        isThreeOfAKind() -> if (!hehe) 3 else {
+            if (charMap.getOrDefault('J', null) == 3) 5 else 3 + min((charMap.getOrDefault('J', null)?.plus(1) ?: 0), 3)
+        }
+
+        isTwoPair() -> if (!hehe) 2 else {
+            if (charMap.getOrDefault('J', null) == 2) 5 else 2 + min((charMap.getOrDefault('J', null)?.plus(1) ?: 0), 4)
+        }
+
+        isTwoOfAKind() -> if (!hehe) 1 else {
+            if (charMap.getOrDefault('J', null) == 2) 3 else 1 + min((charMap.getOrDefault('J', null)?.plus(1) ?: 0), 5)
+        }
+
+        else -> if (!hehe) 0 else when {
+            charMap.getOrDefault('J', null) == 1 -> 1
+            else -> 0
+        }
     }
 
     private fun Char.getCardValue() = when (this) {
         'A' -> 14
         'K' -> 13
         'Q' -> 12
-        'J' -> 11
+        'J' -> if (!hehe) 11 else 1
         'T' -> 10
         '9' -> 9
         '8' -> 8

@@ -3,15 +3,11 @@ class Day09(input: List<String>) {
     private val data = input.map { it.split(" ").map { num -> num.toLong() } }.toMutableList()
 
     fun part1(): Long {
-        return data.sumOf {
-            findExtrapolatedNextNumber(it)
-        }
+        return data.sumOf { findExtrapolatedNextNumber(it) }
     }
 
     fun part2(): Long{
-        return data.sumOf {
-            findExtrapolatedHistoricNumber(it)
-        }
+        return data.sumOf { findExtrapolatedHistoricNumber(it) }
     }
 
     private fun findExtrapolatedNextNumber(differences: List<Long>): Long {

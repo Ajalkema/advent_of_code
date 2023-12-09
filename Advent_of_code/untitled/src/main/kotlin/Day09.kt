@@ -1,6 +1,6 @@
 class Day09(input: List<String>) {
 
-    private val data = input.map { it.split(" ").map { num -> num.toLong() } }.toMutableList()
+    private val data = input.map { it.split(" ").map { num -> num.toLong() } }
 
     fun part1(): Long {
         return data.sumOf { findExtrapolatedNextNumber(it) }

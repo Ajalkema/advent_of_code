@@ -28,3 +28,5 @@ fun findLCMOfListOfNumbers(numbers: List<BigInteger>): BigInteger {
     }
     return result
 }
+
+data class Position(val x: Int, val y: Int)

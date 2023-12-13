@@ -17,31 +17,30 @@ class Day10(val input: List<String>) {
     }
 
     fun part2(): Int {
-        var up = 1
-        var down = 0
-        var left = 0
-        var right = 1
-
         var currentPosition = start
+        val paths = mutableListOf(currentPosition)
         var previousPosition: Position? = null
         do {
             val tmp = currentPosition
             currentPosition = findNextTile(currentPosition, previousPosition)
+            paths.add(currentPosition)
             previousPosition = tmp
-            when (grid[currentPosition.x][currentPosition.y]) {
-                'L' -> { up++; right++ }
-                'F' -> { down++; right++ }
-                'J' -> { up++; left++ }
-                '7' -> { down++; left++ }
-                '|' -> { up++; down++ }
-                '-' -> { left++; right++ }
-            }
         } while (currentPosition != start)
-        up.println()
-        down.println()
-        left.println()
-        right.println()
-        return 0
+
+        var count = 0
+        grid.forEachIndexed { y, row ->
+            row.forEachIndexed { x, _ ->
+                if (!paths.contains(Position(x, y))) {
+                    var intersections = 0
+                    ((x + 1)..<row.size).forEach lol@ {
+                        if (grid[y][it] == '|' && paths.contains(Position(it, y))) intersections++
+                    }
+                    if (intersections % 2 != 0) count++
+                }
+            }
+        }
+
+        return count
     }
 
     private fun findNextTile(position: Position, previousPosition: Position?): Position {

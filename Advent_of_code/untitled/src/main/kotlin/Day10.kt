@@ -31,11 +31,11 @@ class Day10(val input: List<String>) {
         grid.forEachIndexed { y, row ->
             row.forEachIndexed { x, _ ->
                 if (!paths.contains(Position(x, y))) {
-                    var lastCorner = 'S'
+                    var lastCorner: Char? = null
                     var intersections = 0
-                    ((x + 1)..<row.size).forEach lol@{
-                        if (grid[y][it] == 'F' && lastCorner == 'J' && paths.contains(Position(it, y))) intersections++
-                        if (grid[y][it] == 'L' && lastCorner == '7' && paths.contains(Position(it, y))) intersections++
+                    ((x + 1)..<row.size).forEach {
+                        if (grid[y][it] == 'J' && lastCorner == 'F' && paths.contains(Position(it, y))) intersections++
+                        if (grid[y][it] == '7' && lastCorner == 'L' && paths.contains(Position(it, y))) intersections++
                         if (grid[y][it] == '|' && paths.contains(Position(it, y))) intersections++
 
                         if (grid[y][it] in listOf('J', '7', 'F', 'L') && paths.contains(Position(it, y))) lastCorner = grid[y][it]
